@@ -7,18 +7,35 @@ import (
 	"strings"
 )
 
+func isDigit(char byte) bool {
+	if (48 <= char) && (char <= 57) {
+		return true
+	} else {
+		return false
+	}
+}
+
 func unpack(str string) string {
+
+	if len(str) == 1 && !isDigit(str[0]) {
+		return str
+	}
+
 	result_str := ""
-	for i := 0; i < len(str); i++ {
-		if (49 < str[i]) && (str[i] < 57) {
+	for i := 1; i < len(str); i++ {
+		if isDigit(str[i]) {
 			count, _ := strconv.Atoi(string(str[i]))
-			if i != 0 { //workaround if first digit
-				if (str[i-1] < 49) || (57 < str[i-1]) { // check if 2 digit in a row
-					result_str = result_str + strings.Repeat(string(str[i-1]), count-1)
-				}
+			if !isDigit(str[i-1]) {
+				result_str = result_str + strings.Repeat(string(str[i-1]), count)
 			}
 		} else {
-			result_str = result_str + string(str[i])
+
+			if !isDigit(str[i-1]) {
+				result_str = result_str + string(str[i-1])
+			}
+			if i == len(str)-1 { //always add last
+				result_str = result_str + string(str[i])
+			}
 		}
 	}
 	return result_str
