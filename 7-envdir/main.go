@@ -36,7 +36,11 @@ func runCmd(cmd []string, env map[string]string) int {
 	c1.Stdin = os.Stdin
 	c1.Stderr = os.Stderr
 	c1.Start()
-	c1.Wait()
+	if err := c1.Wait(); err != nil {
+		if exitError, ok := err.(*exec.ExitError); ok {
+			return exitError.ExitCode()
+		}
+	}
 	return 0
 }
 
@@ -52,7 +56,7 @@ func main() {
 		for _, v := range os.Environ() {
 			fmt.Println(v)
 		}
-		return
+		os.Exit(99)
 	}
 
 	//check envdir is exist
@@ -62,5 +66,5 @@ func main() {
 
 	var env map[string]string
 	env, _ = readDir(os.Args[1])
-	runCmd(os.Args[2:], env)
+	os.Exit(runCmd(os.Args[2:], env))
 }
