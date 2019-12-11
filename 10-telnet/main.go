@@ -24,7 +24,10 @@ func main() {
 	if flag.Arg(1) == "" {
 		log.Fatalln("Need enter host and port")
 	}
-	duration, _ := time.ParseDuration(timeout)
+	duration, err := time.ParseDuration(timeout)
+	if err != nil {
+		log.Fatalln("Parse duration error:", err)
+	}
 	ctx, cancel := context.WithTimeout(context.Background(), duration)
 
 	//this code need for raw read/write from/to terminal
@@ -40,7 +43,7 @@ func main() {
 	}()
 
 	//Create connection
-	dialer := new(net.Dialer)
+	var dialer net.Dialer
 	conn, err := dialer.DialContext(ctx, "tcp", flag.Arg(0)+":"+flag.Arg(1))
 	if err != nil {
 		log.Fatalln("Cannot connect:", err)
