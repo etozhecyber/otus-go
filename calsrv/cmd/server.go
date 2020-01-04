@@ -3,15 +3,16 @@ package cmd
 import (
 	"log"
 
-	"github.com/etozhecyber/otus-go/8-calsrv/internal/domain/services"
-	//"github.com/etozhecyber/otus-go/8-calsrv/internal/grpc/api"
-	"github.com/etozhecyber/otus-go/8-calsrv/internal/memorydb"
+	"github.com/etozhecyber/otus-go/calsrv/internal/adapters/api"
+	"github.com/etozhecyber/otus-go/calsrv/internal/adapters/memorydb"
+	"github.com/etozhecyber/otus-go/calsrv/internal/domain/services"
+
 	"github.com/spf13/cobra"
 )
 
 // TODO: dependency injection, orchestrator
-func construct(dsn string) (*api.CalendarServer, error) {
-	eventStorage, err := memorydb.NewMemoryEventStorage(dsn)
+func construct() (*api.CalendarServer, error) {
+	eventStorage, err := memorydb.NewMemoryEventStorage()
 	if err != nil {
 		return nil, err
 	}
@@ -19,7 +20,7 @@ func construct(dsn string) (*api.CalendarServer, error) {
 		EventStorage: eventStorage,
 	}
 	server := &api.CalendarServer{
-		EventService: eventService,
+		EventUsecases: eventService,
 	}
 	return server, nil
 }
@@ -29,10 +30,10 @@ var dsn string
 
 /*ServerCmd dss*/
 var ServerCmd = &cobra.Command{
-	Use:   "grpc_server",
-	Short: "Run grpc server",
+	Use:   "server",
+	Short: "Run server",
 	Run: func(cmd *cobra.Command, args []string) {
-		server, err := construct(dsn)
+		server, err := construct()
 		if err != nil {
 			log.Fatal(err)
 		}
