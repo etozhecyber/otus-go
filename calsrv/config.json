@@ -1,0 +1,5 @@
+{
+    "http_listen": "0.0.0.0:8080",
+    "log_file": "hello.log",
+    "log_level": "debug"
+}
