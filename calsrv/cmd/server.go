@@ -28,7 +28,7 @@ func construct() (*api.CalendarServer, error) {
 var addr string
 var dsn string
 
-/*ServerCmd dss*/
+//ServerCmd server subprogram
 var ServerCmd = &cobra.Command{
 	Use:   "server",
 	Short: "Run server",

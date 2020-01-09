@@ -23,8 +23,7 @@ func SetupLogger(config Config) error {
 	//setting log file
 	logfile, err := os.OpenFile(config.LogFile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
-		log.Error(err)
-		return nil
+		return err
 	}
 	log.SetOutput(logfile)
 	return nil

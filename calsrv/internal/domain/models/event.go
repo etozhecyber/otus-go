@@ -6,9 +6,7 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
-/*
-Event model
-*/
+//Event model
 type Event struct {
 	ID        uuid.UUID
 	Owner     string

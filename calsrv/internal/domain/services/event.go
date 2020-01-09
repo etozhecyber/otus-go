@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	biserrors "github.com/etozhecyber/otus-go/calsrv/internal/domain/errors"
+	bisErrors "github.com/etozhecyber/otus-go/calsrv/internal/domain/errors"
 	"github.com/etozhecyber/otus-go/calsrv/internal/domain/interfaces"
 	"github.com/etozhecyber/otus-go/calsrv/internal/domain/models"
 	uuid "github.com/satori/go.uuid"
@@ -19,15 +19,15 @@ type EventService struct {
 func (es *EventService) CreateEvent(ctx context.Context, owner, title, text string, startTime, endTime *time.Time) error {
 
 	if startTime.After(*endTime) {
-		return biserrors.EventError(biserrors.ErrIncorectEndDate)
+		return bisErrors.EventError(bisErrors.ErrIncorectEndDate)
 	}
 	if startTime.Weekday() == 6 || startTime.Weekday() == 7 {
-		return biserrors.EventError(biserrors.ErrWeekendStartDate)
+		return bisErrors.EventError(bisErrors.ErrWeekendStartDate)
 	}
 	if endTime.Weekday() == 6 || endTime.Weekday() == 7 {
-		return biserrors.EventError(biserrors.ErrWeekendEndDate)
+		return bisErrors.EventError(bisErrors.ErrWeekendEndDate)
 	}
-	event := &models.Event{
+	event := models.Event{
 		ID:        uuid.NewV4(),
 		Owner:     owner,
 		Title:     title,
@@ -52,7 +52,7 @@ func (es *EventService) DelEventbyID(ctx context.Context, id uuid.UUID) error {
 }
 
 // UpdateEventbyID update event by ID
-func (es *EventService) UpdateEventbyID(ctx context.Context, id uuid.UUID, event *models.Event) error {
+func (es *EventService) UpdateEventbyID(ctx context.Context, id uuid.UUID, event models.Event) error {
 	err := es.EventStorage.UpdateEvent(ctx, id, event)
 	if err != nil {
 		return err
@@ -61,7 +61,7 @@ func (es *EventService) UpdateEventbyID(ctx context.Context, id uuid.UUID, event
 }
 
 // GetEvents get all events
-func (es *EventService) GetEvents(ctx context.Context) ([]*models.Event, error) {
+func (es *EventService) GetEvents(ctx context.Context) ([]models.Event, error) {
 	events, err := es.EventStorage.ListEvents(ctx)
 	if err != nil {
 		return nil, err

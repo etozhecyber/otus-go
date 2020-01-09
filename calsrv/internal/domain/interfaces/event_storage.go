@@ -11,9 +11,9 @@ import (
 EventStorage interface of storage drivers
 */
 type EventStorage interface {
-	AddEvent(ctx context.Context, event *models.Event) error
-	GetEventByID(ctx context.Context, id uuid.UUID) (*models.Event, error)
+	AddEvent(ctx context.Context, event models.Event) error
+	GetEventByID(ctx context.Context, id uuid.UUID) (models.Event, error)
 	DelEvent(ctx context.Context, id uuid.UUID) error
-	UpdateEvent(ctx context.Context, id uuid.UUID, newEvent *models.Event) error
-	ListEvents(ctx context.Context) ([]*models.Event, error)
+	UpdateEvent(ctx context.Context, id uuid.UUID, newEvent models.Event) error
+	ListEvents(ctx context.Context) ([]models.Event, error)
 }

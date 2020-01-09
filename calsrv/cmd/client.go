@@ -6,11 +6,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var server string
-var title string
-var text string
-var startTime string
-var endTime string
+var server, title, text, startTime, endTime string
 
 const tsLayout = "2006-01-02T15:04:05"
 

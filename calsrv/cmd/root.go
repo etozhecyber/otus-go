@@ -4,7 +4,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-/*RootCmd default command*/
+//RootCmd default command
 var RootCmd = &cobra.Command{
 	Use:   "calsrv <server|client>",
 	Short: "calsrv is a calendar server demo",

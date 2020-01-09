@@ -11,50 +11,51 @@ import (
 //MemoryEventStorage struct
 type MemoryEventStorage struct {
 	mux sync.Mutex
-	db  map[uuid.UUID]*models.Event //simple index
+	db  map[uuid.UUID]models.Event //simple index
 }
 
 //NewMemoryEventStorage create new memes
 func NewMemoryEventStorage() (*MemoryEventStorage, error) {
 	return &MemoryEventStorage{
-		db:  map[uuid.UUID]*models.Event{},
-		mux: sync.Mutex{},
+		db: map[uuid.UUID]models.Event{},
 	}, nil
 }
 
 //AddEvent add new event
-func (memes *MemoryEventStorage) AddEvent(ctx context.Context, event *models.Event) error {
-	memes.mux.Lock()
-	defer memes.mux.Unlock()
-	memes.db[event.ID] = event
+func (m *MemoryEventStorage) AddEvent(ctx context.Context, event models.Event) error {
+	m.mux.Lock()
+	defer m.mux.Unlock()
+	m.db[event.ID] = event
 	return nil
 }
 
 //GetEventByID Get event by ID
-func (memes *MemoryEventStorage) GetEventByID(ctx context.Context, id uuid.UUID) (*models.Event, error) {
-	return memes.db[id], nil
+func (m *MemoryEventStorage) GetEventByID(ctx context.Context, id uuid.UUID) (models.Event, error) {
+	m.mux.Lock()
+	defer m.mux.Unlock()
+	return m.db[id], nil
 }
 
 //DelEvent Delete event
-func (memes *MemoryEventStorage) DelEvent(ctx context.Context, id uuid.UUID) error {
-	memes.mux.Lock()
-	defer memes.mux.Unlock()
-	delete(memes.db, id)
+func (m *MemoryEventStorage) DelEvent(ctx context.Context, id uuid.UUID) error {
+	m.mux.Lock()
+	defer m.mux.Unlock()
+	delete(m.db, id)
 	return nil
 }
 
 //UpdateEvent Edit event
-func (memes *MemoryEventStorage) UpdateEvent(ctx context.Context, id uuid.UUID, newEvent *models.Event) error {
-	memes.mux.Lock()
-	defer memes.mux.Unlock()
-	memes.db[id] = newEvent
+func (m *MemoryEventStorage) UpdateEvent(ctx context.Context, id uuid.UUID, newEvent models.Event) error {
+	m.mux.Lock()
+	defer m.mux.Unlock()
+	m.db[id] = newEvent
 	return nil
 }
 
 //ListEvents Get slice of events
-func (memes *MemoryEventStorage) ListEvents(ctx context.Context) ([]*models.Event, error) {
-	var res []*models.Event
-	for _, event := range memes.db {
+func (m *MemoryEventStorage) ListEvents(ctx context.Context) ([]models.Event, error) {
+	var res []models.Event
+	for _, event := range m.db {
 		res = append(res, event)
 	}
 	return res, nil
