@@ -10,7 +10,11 @@ var RootCmd = &cobra.Command{
 	Short: "calsrv is a calendar server demo",
 }
 
+var configPath string
+
 func init() {
 	RootCmd.AddCommand(ServerCmd)
 	RootCmd.AddCommand(ClientCmd)
+	RootCmd.AddCommand(HelloCmd)
+	RootCmd.PersistentFlags().StringVar(&configPath, "config", "config.json", "path to config file")
 }
