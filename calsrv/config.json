@@ -1,5 +1,6 @@
 {
     "http_listen": "0.0.0.0:8080",
-    "log_file": "hello.log",
-    "log_level": "debug"
+    "log_file": "debug.log",
+    "log_level": "debug",
+    "access_log_file": "access.log"
 }

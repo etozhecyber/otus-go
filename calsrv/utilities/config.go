@@ -9,6 +9,7 @@ import (
 type Config struct {
 	HTTPListen string `json:"http_listen"`
 	LogFile    string `json:"log_file"`
+	AccessLog  string `json:"access_log_file"`
 	LogLevel   string `json:"log_level"`
 }
 

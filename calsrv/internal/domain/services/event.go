@@ -16,9 +16,9 @@ type EventService struct {
 }
 
 // CreateEvent make new event
-func (es *EventService) CreateEvent(ctx context.Context, owner, title, text string, startTime, endTime *time.Time) error {
+func (es *EventService) CreateEvent(ctx context.Context, owner, title, text string, startTime, endTime time.Time) error {
 
-	if startTime.After(*endTime) {
+	if startTime.After(endTime) {
 		return bisErrors.EventError(bisErrors.ErrIncorectEndDate)
 	}
 	if startTime.Weekday() == 6 || startTime.Weekday() == 7 {
@@ -60,9 +60,18 @@ func (es *EventService) UpdateEventbyID(ctx context.Context, id uuid.UUID, event
 	return nil
 }
 
-// GetEvents get all events
-func (es *EventService) GetEvents(ctx context.Context) ([]models.Event, error) {
-	events, err := es.EventStorage.ListEvents(ctx)
+// GetEvents get events by date
+func (es *EventService) GetEvents(ctx context.Context, startdate time.Time, enddate time.Time) ([]models.Event, error) {
+	events, err := es.EventStorage.ListEvents(ctx, startdate, enddate)
+	if err != nil {
+		return nil, err
+	}
+	return events, nil
+}
+
+// GetAllEvents get all events
+func (es *EventService) GetAllEvents(ctx context.Context) ([]models.Event, error) {
+	events, err := es.EventStorage.ListAllEvents(ctx)
 	if err != nil {
 		return nil, err
 	}
