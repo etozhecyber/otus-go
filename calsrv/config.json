@@ -1,6 +1,8 @@
 {
     "http_listen": "0.0.0.0:8080",
+    "grpc_listen": "0.0.0.0:50051",
     "log_file": "debug.log",
     "log_level": "debug",
-    "access_log_file": "access.log"
+    "access_log_file": "access.log",
+    "GRPCaccess_log_file": "grpc_access.log"
 }
