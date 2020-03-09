@@ -16,5 +16,6 @@ func init() {
 	RootCmd.AddCommand(ServerCmd)
 	RootCmd.AddCommand(ClientCmd)
 	RootCmd.AddCommand(HelloCmd)
+	RootCmd.AddCommand(HTTPServerCmd)
 	RootCmd.PersistentFlags().StringVar(&configPath, "config", "config.json", "path to config file")
 }

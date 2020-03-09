@@ -1,0 +1,29 @@
+POST http://localhost:8080/create_event
+Content-Type: application/x-www-form-urlencoded
+
+user=Andrey
+&title=Drink water
+&body=drinkdd
+&endtime=2020-02-17T00:57:36%2b03:00
+&starttime=2020-02-17T01:57:36%2b03:00
+###
+POST http://localhost:8080/update_event
+Content-Type: application/x-www-form-urlencoded
+
+id=771f4069-9cd4-4a09-876b-9b74a66c76b7
+&user=Cyber
+&title=Driker13
+&body=drinkdd
+&endtime=2020-02-17T00:57:36%2b03:00
+&starttime=2020-02-17T00:57:36%2b03:00
+###
+POST http://localhost:8080/delete_event
+Content-Type: application/x-www-form-urlencoded
+
+id=771f4069-9cd4-4a09-876b-9b74a66c76b7
+###
+GET http://localhost:8080/events_for_day
+###
+GET http://localhost:8080/events_for_week
+###
+GET http://localhost:8080/events_for_month

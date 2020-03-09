@@ -3,6 +3,7 @@ package memorydb
 import (
 	"context"
 	"sync"
+	"time"
 
 	"github.com/etozhecyber/otus-go/calsrv/internal/domain/models"
 	uuid "github.com/satori/go.uuid"
@@ -53,7 +54,18 @@ func (m *MemoryEventStorage) UpdateEvent(ctx context.Context, id uuid.UUID, newE
 }
 
 //ListEvents Get slice of events
-func (m *MemoryEventStorage) ListEvents(ctx context.Context) ([]models.Event, error) {
+func (m *MemoryEventStorage) ListEvents(ctx context.Context, startdate time.Time, enddate time.Time) ([]models.Event, error) {
+	var res []models.Event
+	for _, event := range m.db {
+		if startdate.Before(event.StartTime) && enddate.After(event.EndTime) {
+			res = append(res, event)
+		}
+	}
+	return res, nil
+}
+
+//ListAllEvents Get slice of all events
+func (m *MemoryEventStorage) ListAllEvents(ctx context.Context) ([]models.Event, error) {
 	var res []models.Event
 	for _, event := range m.db {
 		res = append(res, event)
