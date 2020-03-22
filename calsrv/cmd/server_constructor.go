@@ -1,14 +1,13 @@
 package cmd
 
 import (
-	"github.com/etozhecyber/otus-go/calsrv/internal/adapters/api"
 	"github.com/etozhecyber/otus-go/calsrv/internal/adapters/httpapi"
 	"github.com/etozhecyber/otus-go/calsrv/internal/adapters/memorydb"
+	grpc "github.com/etozhecyber/otus-go/calsrv/internal/adapters/server"
 	"github.com/etozhecyber/otus-go/calsrv/internal/domain/services"
 )
 
-// TODO: dependency injection, orchestrator
-func construct() (*api.CalendarServer, error) {
+func grpcServerConstruct() (*grpc.CalendarServer, error) {
 	eventStorage, err := memorydb.NewMemoryEventStorage()
 	if err != nil {
 		return nil, err
@@ -16,7 +15,7 @@ func construct() (*api.CalendarServer, error) {
 	eventService := &services.EventService{
 		EventStorage: eventStorage,
 	}
-	server := &api.CalendarServer{
+	server := &grpc.CalendarServer{
 		EventUsecases: eventService,
 	}
 	return server, nil

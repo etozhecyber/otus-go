@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+package api;
+
+service calserv {
+  rpc create_new_event(CreateEventRequest) returns (Result);
+  rpc update_event(UpdateEventRequest) returns (Result);
+  rpc delete_event(id) returns (Result);
+  rpc event_for_day(google.protobuf.Empty) returns (stream event);
+  rpc event_for_week(google.protobuf.Empty) returns (stream event);
+  rpc event_for_month(google.protobuf.Empty) returns (stream event);
+}
+
+message CreateEventRequest {
+  // string ID = 1;
+  string Owner = 2;
+  string Title = 3;
+  string Text = 4;
+  google.protobuf.Timestamp StartTime = 5;
+  google.protobuf.Timestamp EndTime = 6;
+}
+
+message UpdateEventRequest {
+  string ID = 1;
+  string Owner = 2;
+  string Title = 3;
+  string Text = 4;
+  google.protobuf.Timestamp StartTime = 5;
+  google.protobuf.Timestamp EndTime = 6;
+}
+
+message Result {
+  string result = 1;
+}
+
+message event {
+  string ID = 1;
+  string Owner = 2;
+  string Title = 3;
+  string Text = 4;
+  google.protobuf.Timestamp StartTime = 5;
+  google.protobuf.Timestamp EndTime = 6;
+}
+
+message id { 
+  string UUID = 1; 
+}

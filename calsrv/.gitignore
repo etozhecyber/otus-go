@@ -1,2 +1,3 @@
 *.log
+*.pb.go
 todo.txt
