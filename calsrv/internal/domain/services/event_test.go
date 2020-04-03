@@ -25,7 +25,7 @@ func TestEventService(t *testing.T) {
 	weekenddate, _ := time.Parse("2006-01-02", "2020-01-04")
 
 	//Creating event check
-	require.Equal(t, nil, eventService.CreateEvent(ctx, "Andrey", "Drink water", "Drink cup of water", startdate, enddate))
+	require.Equal(t, nil, eventService.CreateEvent(ctx, 1, "Drink water", "Drink cup of water", startdate, enddate))
 	events, _ := eventService.GetAllEvents(ctx)
 	require.Equal(t, len(events), 1)
 	require.Equal(t, events[0].Owner, "Andrey")
@@ -43,9 +43,9 @@ func TestEventService(t *testing.T) {
 	*****************/
 
 	//Check error date
-	require.Equal(t, biserrors.EventError(biserrors.ErrIncorectEndDate), eventService.CreateEvent(ctx, "Andrey", "Drink water", "Drink cup of water", enddate, startdate))
+	require.Equal(t, biserrors.EventError(biserrors.ErrIncorectEndDate), eventService.CreateEvent(ctx, 1, "Drink water", "Drink cup of water", enddate, startdate))
 
 	//Check error weekends errors
-	require.Equal(t, biserrors.EventError(biserrors.ErrWeekendStartDate), eventService.CreateEvent(ctx, "Andrey", "Drink water", "Drink cup of water", weekenddate, enddate))
-	require.Equal(t, biserrors.EventError(biserrors.ErrWeekendEndDate), eventService.CreateEvent(ctx, "Andrey", "Drink water", "Drink cup of water", startdate, weekenddate))
+	require.Equal(t, biserrors.EventError(biserrors.ErrWeekendStartDate), eventService.CreateEvent(ctx, 1, "Drink water", "Drink cup of water", weekenddate, enddate))
+	require.Equal(t, biserrors.EventError(biserrors.ErrWeekendEndDate), eventService.CreateEvent(ctx, 1, "Drink water", "Drink cup of water", startdate, weekenddate))
 }

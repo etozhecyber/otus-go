@@ -21,7 +21,7 @@ var ServerCmd = &cobra.Command{
 		if err != nil {
 			log.Fatal(err)
 		}
-		server, err := grpcServerConstruct()
+		server, err := grpcServerConstruct(config)
 		if err != nil {
 			log.Fatal(err)
 		}

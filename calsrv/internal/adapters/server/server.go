@@ -27,7 +27,7 @@ func eventMapper(event models.Event) api.Event {
 	endtime, _ := ptypes.TimestampProto(event.EndTime)
 	return api.Event{
 		ID:        event.ID.String(),
-		Owner:     event.Owner,
+		Owner:     int64(event.Owner),
 		Title:     event.Title,
 		Text:      event.Text,
 		StartTime: starttime,
@@ -42,9 +42,8 @@ type CalendarServer struct {
 
 // CreateNewEvent ...
 func (cs *CalendarServer) CreateNewEvent(ctx context.Context, in *api.CreateEventRequest) (*api.Result, error) {
-	user, title, body := in.GetOwner(), in.GetTitle(), in.GetText()
-	// starttime := time.Now()
-	// endtime := time.Now().Add(1 * time.Hour)
+	user := int(in.GetOwner())
+	title, body := in.GetTitle(), in.GetText()
 	starttime, err := ptypes.Timestamp(in.GetStartTime())
 	if err != nil {
 		log.Error(err)
@@ -72,9 +71,8 @@ func (cs *CalendarServer) CreateNewEvent(ctx context.Context, in *api.CreateEven
 
 // UpdateEvent by ID
 func (cs *CalendarServer) UpdateEvent(ctx context.Context, in *api.UpdateEventRequest) (*api.Result, error) {
-	user, title, body := in.GetOwner(), in.GetTitle(), in.GetText()
-	// starttime := time.Now()
-	// endtime := time.Now().Add(1 * time.Hour)
+	user := int(in.GetOwner())
+	title, body := in.GetTitle(), in.GetText()
 	starttime, err := ptypes.Timestamp(in.GetStartTime())
 	if err != nil {
 		log.Error(err)
