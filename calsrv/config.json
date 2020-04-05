@@ -4,5 +4,6 @@
     "log_file": "debug.log",
     "log_level": "debug",
     "access_log_file": "access.log",
-    "GRPCaccess_log_file": "grpc_access.log"
+    "GRPCaccess_log_file": "grpc_access.log",
+    "db_dsn": "postgres://calserv:password@localhost:5432/calserv?sslmode=disable"
 }

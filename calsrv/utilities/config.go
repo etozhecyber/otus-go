@@ -13,6 +13,7 @@ type Config struct {
 	AccessLog     string `json:"access_log_file"`
 	GRPCAccessLog string `json:"GRPCaccess_log_file"`
 	LogLevel      string `json:"log_level"`
+	DBDSN         string `json:"db_dsn,omitempty"`
 }
 
 //GetConfiguration read from config file

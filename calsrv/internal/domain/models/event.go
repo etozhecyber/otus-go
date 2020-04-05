@@ -9,7 +9,7 @@ import (
 //Event model
 type Event struct {
 	ID        uuid.UUID
-	Owner     string
+	Owner     int
 	Title     string
 	Text      string
 	StartTime time.Time

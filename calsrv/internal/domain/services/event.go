@@ -16,7 +16,7 @@ type EventService struct {
 }
 
 // CreateEvent make new event
-func (es *EventService) CreateEvent(ctx context.Context, owner, title, text string, startTime, endTime time.Time) error {
+func (es *EventService) CreateEvent(ctx context.Context, owner int, title, text string, startTime, endTime time.Time) error {
 
 	if startTime.After(endTime) {
 		return bisErrors.EventError(bisErrors.ErrIncorectEndDate)

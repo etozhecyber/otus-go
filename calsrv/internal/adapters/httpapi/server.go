@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/etozhecyber/otus-go/calsrv/internal/domain/models"
@@ -136,8 +137,14 @@ func (hs *HTTPServer) createEventHandler(w http.ResponseWriter, r *http.Request)
 		error.jsonPrint(w, http.StatusMethodNotAllowed)
 		return
 	}
-
-	ctx, user, title, body := context.Background(), r.FormValue("user"), r.FormValue("title"), r.FormValue("body")
+	user, err := strconv.Atoi(r.FormValue("user"))
+	if err != nil {
+		log.Error("cannot convert user to int64:", err)
+		error := httpError{err.Error()}
+		error.jsonPrint(w, http.StatusBadRequest)
+		return
+	}
+	ctx, title, body := context.Background(), r.FormValue("title"), r.FormValue("body")
 
 	starttime, err := time.Parse(time.RFC3339, r.FormValue("starttime"))
 	if err != nil {
@@ -171,8 +178,14 @@ func (hs *HTTPServer) updateEventHandler(w http.ResponseWriter, r *http.Request)
 		error.jsonPrint(w, http.StatusMethodNotAllowed)
 		return
 	}
-
-	ctx, user, title, body := context.Background(), r.FormValue("user"), r.FormValue("title"), r.FormValue("body")
+	user, err := strconv.Atoi(r.FormValue("user"))
+	if err != nil {
+		log.Error("cannot convert user to int64:", err)
+		error := httpError{err.Error()}
+		error.jsonPrint(w, http.StatusBadRequest)
+		return
+	}
+	ctx, title, body := context.Background(), r.FormValue("title"), r.FormValue("body")
 	id, err := uuid.FromString(r.FormValue("id"))
 	if err != nil {
 		log.Error("cannot convert id to UUID:", err)
