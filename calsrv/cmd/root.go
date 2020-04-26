@@ -13,9 +13,12 @@ var RootCmd = &cobra.Command{
 var configPath string
 
 func init() {
+
 	RootCmd.AddCommand(ServerCmd)
 	RootCmd.AddCommand(ClientCmd)
 	RootCmd.AddCommand(HelloCmd)
+	RootCmd.AddCommand(Scheduler)
+	RootCmd.AddCommand(Sender)
 	RootCmd.AddCommand(HTTPServerCmd)
 	RootCmd.PersistentFlags().StringVar(&configPath, "config", "config.json", "path to config file")
 }

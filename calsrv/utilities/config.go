@@ -14,6 +14,7 @@ type Config struct {
 	GRPCAccessLog string `json:"GRPCaccess_log_file"`
 	LogLevel      string `json:"log_level"`
 	DBDSN         string `json:"db_dsn,omitempty"`
+	AMQPURI       string `json:"amqp_uri,omitempty"`
 }
 
 //GetConfiguration read from config file
