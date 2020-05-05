@@ -1,10 +1,10 @@
 {
     "http_listen": "0.0.0.0:8080",
     "grpc_listen": "0.0.0.0:50051",
-    "log_file": "debug.log",
+    "log_file": "/dev/stderr",
     "log_level": "debug",
-    "access_log_file": "access.log",
-    "GRPCaccess_log_file": "grpc_access.log",
-    "db_dsn": "postgres://calserv:password@localhost:5432/calserv?sslmode=disable",
-    "amqp_uri": "amqp://guest:guest@localhost:5672"
+    "access_log_file": "/dev/stdout",
+    "GRPCaccess_log_file": "/dev/stdout",
+    "db_dsn": "postgres://calserv:password@db:5432/calserv?sslmode=disable",
+    "amqp_uri": "amqp://guest:guest@rmq:5672"
 }

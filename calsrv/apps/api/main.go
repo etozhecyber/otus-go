@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/etozhecyber/otus-go/calsrv/internal/adapters/psql"
@@ -42,7 +41,6 @@ var RootCmd = &cobra.Command{
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Println(server)
 		err = server.Serve(config)
 		if err != nil {
 			log.Fatal(err)
