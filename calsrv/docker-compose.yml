@@ -1,0 +1,46 @@
+version: "3"
+services:
+  rmq:
+    image: rabbitmq:3-management
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: calserv
+      POSTGRES_USER: calserv
+      POSTGRES_PASSWORD: password
+  migration:
+    command: "./wait.sh db 5432 /go/bin/goose --env=docker up"
+    build:
+      context: .
+      dockerfile: migration.Dockerfile
+    depends_on:
+      - "db"
+
+#apps
+  api:
+    build:
+      context: .
+      dockerfile: api.Dockerfile
+    ports:
+      - "50051:50051"
+    depends_on:
+      - "db"
+      - "migration"
+  sender:
+    command: "./wait.sh rmq 5672 ./sender"
+    build:
+      context: .
+      dockerfile: sender.Dockerfile
+    depends_on:
+      - "migration"
+      - "rmq"
+  scheduler:
+    command: "./wait.sh rmq 5672 ./scheduler"
+    build:
+      context: .
+      dockerfile: scheduler.Dockerfile
+    depends_on:
+      - "migration"
+      - "rmq"
+      - "db"

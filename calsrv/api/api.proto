@@ -4,6 +4,7 @@ import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
 
 package api;
+option go_package = "github.com/etozhecyber/otus-go/blob/master/calsrv/api";
 
 service calserv {
   rpc create_new_event(CreateEventRequest) returns (Result);

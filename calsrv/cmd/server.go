@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/etozhecyber/otus-go/calsrv/utilities"
@@ -25,7 +24,6 @@ var ServerCmd = &cobra.Command{
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Println(server)
 		err = server.Serve(config)
 		if err != nil {
 			log.Fatal(err)

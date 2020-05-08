@@ -1,0 +1,3 @@
+docker:
+    driver: postgres
+    open: host=db user=calserv password=password dbname=calserv sslmode=disable
