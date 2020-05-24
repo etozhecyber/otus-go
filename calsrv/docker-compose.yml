@@ -16,6 +16,37 @@ services:
       dockerfile: migration.Dockerfile
     depends_on:
       - "db"
+  pg_exporter:
+    image: wrouesnel/postgres_exporter
+    volumes:
+      - ./prometheus/queries.yml:/queries.yml
+    environment:
+      DATA_SOURCE_NAME: postgresql://calserv:password@db:5432/calserv?sslmode=disable
+      PG_EXPORTER_EXTEND_QUERY_PATH: /queries.yml
+    ports:
+      - 9187:9187
+    depends_on:
+      - "db"
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+        - pg_exporter
+    #   - api
+    #   - sender
+    #   - scheduler
+  # grafana:
+  #   image: grafana/grafana
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - prometheus
+  #     - grpcserver
+  #     - grpcclient
 
 #apps
   api:
