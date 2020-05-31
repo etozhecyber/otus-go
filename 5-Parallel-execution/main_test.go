@@ -28,7 +28,7 @@ type TestCaseType struct {
 	expectedResult error
 }
 
-func TestParallelExecute(t *testing.T) {
+func TestRun(t *testing.T) {
 
 	//create test slice of functions
 	var fns []func() error
@@ -45,7 +45,7 @@ func TestParallelExecute(t *testing.T) {
 	}
 
 	for _, testCase := range testCases {
-		require.Equal(t, parallelExecute(testCase.testFuncs, testCase.testThreads, testCase.testMaxErrors), testCase.expectedResult)
+		require.Equal(t, Run(testCase.testFuncs, testCase.testThreads, testCase.testMaxErrors), testCase.expectedResult)
 	}
 
 }
